@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="label" text="Label" />
+            <Button fx:id="path1Button" mnemonicParsing="false" onAction="#onClickPath1" text="Path1" />
+            <Button fx:id="path2Button" mnemonicParsing="false" onAction="#onClickPath2" text="Path2" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
