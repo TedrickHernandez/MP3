@@ -35,12 +35,25 @@ public class Game {
         generatePaths();
     }
 
-    public void generatePaths() {
-        Path retirementPath = new Path("Retirement Path");
+    public Path[] generatePaths() {
+        /*Path retirementPath = new Path("Retirement Path");
         Path careerPath2 = new Path("Career Path", retirementPath);
         Path changeCareerPath = new Path("Change Career Path", retirementPath);
         careerPath = new Path("Career Path", careerPath2, changeCareerPath);
-        collegePath = new Path("College Path", careerPath2);
+        collegePath = new Path("College Path", careerPath2);*/
+
+        Path RP = createRetirementPath();
+        Path MP2 = createMixedPath("Mixed Path 2", RP, null);
+        Path CCP = createChangeCareerPath("Change Career Path", MP2, null);
+        Path SFP = createStartFamilyPath("Start Family Path", MP2, null);
+        Path MP1 = createMixedPath("Mixed Path 1", CCP, SFP);
+        Path startingPaths[] = {createCareerPath("Career Path", MP1, null), createCollegePath("College Path", P1, null)};
+
+        return startingPaths[];
+    }
+
+    public Path createRetirementPath ()
+    {
     }
 
     public ArrayList<Player> getActivePlayers() {

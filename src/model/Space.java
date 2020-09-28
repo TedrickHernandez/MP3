@@ -6,8 +6,9 @@ public class Space {
     private String name;
     private ArrayList<Player> players; // for GUI outputting purposes ONLY
 
-    public Space() {
+    public Space(String insertName) {
         players = new ArrayList<>();
+        name = insertName;
     }
 
     public String getName() {
