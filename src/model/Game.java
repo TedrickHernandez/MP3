@@ -134,6 +134,8 @@ public class Game {
     {
         Path careerPath = new Path(insertName, path1, path2);
 
+        careerPath.getSpaces().add(new Space("Orange Space"));
+        careerPath.getSpaces().add(new Space("Career Choice Path"));
         for (int i = 0; i < 8; i ++) {
             careerPath.getSpaces().add(new Space("Orange Space"));
         }

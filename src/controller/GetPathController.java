@@ -48,4 +48,9 @@ public class GetPathController implements Initializable {
         // when closing
         ((Stage) ((Node) ae.getSource()).getScene().getWindow()).close();
     }
+
+    public Path returnPath ()
+    {
+        return chosenPath;
+    }
 }

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,6 +22,12 @@ public class GameController {
 
     @FXML
     private Button rollButton;
+
+    @FXML
+    private Label label_playerNo;
+
+    @FXML
+    private Label label_playerCash;
 
     public GameController(int numPlayers) {
         this.numPlayers = numPlayers;
@@ -66,6 +73,7 @@ public class GameController {
 
                 // magenta space so break
                 //if(game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName().equals("Magenta Space")) break;
+                /* @TODO Change to if */
                 switch (game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName())
                 {
                     case "Retirement Space":
@@ -81,7 +89,7 @@ public class GameController {
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).addPlayer(game.getCurrentPlayer());
 
             turn ++;
-            if(turn == game.getActivePlayers().size()) {
+            if(turn >= game.getActivePlayers().size()) {
                 turn = 0;
             }
         }
@@ -99,7 +107,7 @@ public class GameController {
 //            game.getCurrentPlayer()
         } else if(insertSpace.equals("Green Space")) {
 //            game.getCurrentPlayer()
-        } else if(insertSpace.equals("Magenta Space")) {
+        } else if(insertSpace.equals("Pay Raise Space")) {
 //            game.getCurrentPlayer()
         }
     }
@@ -120,11 +128,27 @@ public class GameController {
 
             FXMLLoader getPathLoader = new FXMLLoader(getClass().getResource("/view/GetPath.fxml"));
             GetPathController getPathController = new GetPathController(i + 1, game.getCareerPath(), game.getCollegePath());
+
             getPathLoader.setController(getPathController);
 
             getPathStage.setScene(new Scene(getPathLoader.load()));
 
             getPathStage.showAndWait();
+
+            Path chosenPath = getPathController.returnPath();
+            if (chosenPath.getName().equals("College Path")) {
+                game.getActivePlayers().add(new Player("College", 0, 0, getPathController.returnPath()));
+            }
+            else
+            {
+                CareerCard insertCareerCard = game.getCareerCardDeck().pickTopCareerCard(false);
+                String insertCareer = insertCareerCard.getCareerCardName(); /* @TODO Do same thing as career card */
+                game.getActivePlayers().add(new Player(insertCareer, 0, 0, getPathController.returnPath()));
+            }
+
+            System.out.println(game.getActivePlayers().get(i).getPlayerID());
+            System.out.println(game.getActivePlayers().get(i).getPlayerCareer());
+            System.out.println(game.getActivePlayers().get(i).getPath().getName());
         }
     }
 }

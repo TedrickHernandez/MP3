@@ -2,6 +2,8 @@ package model;
 
 public class Player
 {
+    private int playerID;
+    private static int playerCount;
     private int playerCash = 200000;
     private int playerSalary;
     private int playerTaxDue;
@@ -14,12 +16,15 @@ public class Player
     private boolean playerMarried = false;
     private Path path;
 
-    public Player (String insertCareer, int insertSalary, int insertTaxDue, int insertSpace)
+    public Player (String insertCareer, int insertSalary, int insertTaxDue, Path insertPath)
     {
+        playerCount ++;
+        playerID = playerCount;
         playerCareer = insertCareer;
         playerSalary = insertSalary;
         playerTaxDue = insertTaxDue;
-        playerSpace = insertSpace;
+        path = insertPath;
+        // playerSpace = insertSpace;
     }
 
     public Path getPath() {
@@ -77,5 +82,10 @@ public class Player
     public String getPlayerCareer ()
     {
         return playerCareer;
+    }
+
+    public int getPlayerID ()
+    {
+        return playerID;
     }
 }

@@ -22,4 +22,6 @@ public class SalaryCardDeck
     {
         Collections.shuffle(salaryCards);
     }
+
+    /* @TODO Create the same thing from CareerCardDeck */
 }

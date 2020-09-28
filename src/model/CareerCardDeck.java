@@ -28,4 +28,18 @@ public class CareerCardDeck
     {
         Collections.shuffle(careerCards);
     }
+
+    /* @TODO Remember this for null pointer exception (possible bug area) */
+    public CareerCard pickTopCareerCard (boolean collegeDegreeRequired)
+    {
+        for (int i = 0; i < careerCards.size(); i ++) {
+            if (careerCards.get(i).getCareerCardDegreeRequired() == collegeDegreeRequired) {
+                if (careerCards.get(i).getCareerCardPicked() == false) {
+                    careerCards.get(i).setCareerCardPicked(true);
+                    return careerCards.get(i);
+                }
+            }
+        }
+        return null;
+    }
 }
