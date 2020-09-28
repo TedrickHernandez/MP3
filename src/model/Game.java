@@ -47,7 +47,7 @@ public class Game {
         Path CCP = createChangeCareerPath("Change Career Path", MP2, null);
         Path SFP = createStartFamilyPath("Start Family Path", MP2, null);
         Path MP1 = createMixedPath("Mixed Path 1", CCP, SFP);
-        Path startingPaths[] = {createCareerPath("Career Path", MP1, null), createCollegePath("College Path", P1, null)};
+        Path startingPaths[] = {createCareerPath("Career Path", MP1, null), createCollegePath("College Path", MP1, null)};
 
         return startingPaths[];
     }
@@ -125,6 +125,38 @@ public class Game {
         startFamilyPath.getSpaces().add(new Space("Green Space"));
 
         return startFamilyPath;
+    }
+
+    public Path createCareerPath (String insertName, Path path1, Path path2)
+    {
+        Path careerPath = new Path(insertName, path1, path2);
+
+        for (int i = 0; i < 8; i ++) {
+            careerPath.getSpaces().add(new Space("Orange Space"));
+        }
+        careerPath.getSpaces().add(new Space("Get Married Space"));
+        for (int i = 0; i < 5; i ++) {
+            careerPath.getSpaces().add(new Space("Orange Space"));
+        }
+        careerPath.getSpaces().add(new Space("Green Space"));
+        for (int i = 0; i < 8; i ++) {
+            careerPath.getSpaces().add(new Space("Orange Space"));
+        }
+        careerPath.getSpaces().add(new Space("Pay Raise Space"));
+
+        return careerPath;
+    }
+
+    public Path createCollegePath (String insertName, Path path1, Path path2)
+    {
+        Path collegePath = new Path(insertName, path1, path2);
+        for (int i = 0; i < 14; i ++) {
+            collegePath.getSpaces().add(new Space("Orange Space"));
+        }
+        collegePath.getSpaces().add(new Space("Graduation Space"));
+        collegePath.getSpaces().add(new Space("Career Choice Space"));
+
+        return collegePath;
     }
 
     public ArrayList<Player> getActivePlayers() {
