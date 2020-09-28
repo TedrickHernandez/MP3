@@ -54,6 +54,77 @@ public class Game {
 
     public Path createRetirementPath ()
     {
+        Path retirementPath = new Path("Retirement Path", null);
+        retirementPath.getSpaces().add(new Space("Retirement Space"));
+
+        return retirementPath;
+    }
+
+    public Path createMixedPath (String insertName, Path path1, Path path2)
+    {
+        Path mixedPath = new Path(insertName, path1, path2);
+
+        for (int i = 0; i < 7; i ++) {
+            mixedPath.getSpaces().add(new Space("Orange Space"));
+        }
+        mixedPath.getSpaces().add(new Space("Green Space"));
+        for (int i = 0; i < 6; i ++) {
+            mixedPath.getSpaces().add(new Space("Orange Space"));
+        }
+        mixedPath.getSpaces().add(new Space("Pay Raise Space"));
+        for (int i = 0; i < 5; i ++) {
+            mixedPath.getSpaces().add(new Space("Orange Space"));
+        }
+
+        return mixedPath;
+    }
+
+    public Path createChangeCareerPath (String insertName, Path path1, Path path2)
+    {
+        Path changeCareerPath = new Path(insertName, path1, path2);
+
+        changeCareerPath.getSpaces().add(new Space("Career Choice Space"));
+        for (int i = 0; i < 6; i ++) {
+            changeCareerPath.getSpaces().add(new Space("Orange Space"));
+        }
+        changeCareerPath.getSpaces().add(new Space("Pay Raise Space"));
+        for (int i = 0; i < 7; i ++) {
+            changeCareerPath.getSpaces().add(new Space("Orange Space"));
+        }
+        changeCareerPath.getSpaces().add(new Space("Blue Space"));
+        changeCareerPath.getSpaces().add(new Space("Green Space"));
+        for (int i = 0; i < 6; i ++) {
+            changeCareerPath.getSpaces().add(new Space("Orange Space"));
+        }
+        changeCareerPath.getSpaces().add(new Space("Pay Raise Space"));
+
+        return changeCareerPath;
+    }
+
+    public Path createStartFamilyPath (String insertName, Path path1, Path path2)
+    {
+        Path startFamilyPath = new Path(insertName, path1, path2);
+
+        startFamilyPath.getSpaces().add(new Space("Get Married Space"));
+        for (int i = 0; i < 6; i ++) {
+            startFamilyPath.getSpaces().add(new Space("Orange Space"));
+        }
+        startFamilyPath.getSpaces().add(new Space("Buy House Space"));
+        for (int i = 0; i < 5; i ++) {
+            startFamilyPath.getSpaces().add(new Space("Orange Space"));
+        }
+        startFamilyPath.getSpaces().add(new Space("Have a Baby Space"));
+        for (int i = 0; i < 3; i ++) {
+            startFamilyPath.getSpaces().add(new Space("Orange Space"));
+        }
+        startFamilyPath.getSpaces().add(new Space("Blue Space"));
+        startFamilyPath.getSpaces().add(new Space("Pay Raise Space"));
+        for (int i = 0; i < 5; i ++) {
+            startFamilyPath.getSpaces().add(new Space("Orange Space"));
+        }
+        startFamilyPath.getSpaces().add(new Space("Green Space"));
+
+        return startFamilyPath;
     }
 
     public ArrayList<Player> getActivePlayers() {

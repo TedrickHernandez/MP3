@@ -58,7 +58,7 @@ public class GameController {
             Random random = new Random();
             int rolled = random.nextInt(10) + 1;
 
-            Space spaceLanded = new Space();
+            String spaceLanded = game.getCurrentPlayer().getPath().getSpaces()[game.getCurrentPlayer().getPlayerSpace()];
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).removePlayer(game.getCurrentPlayer());
             for(int i = 0; i < rolled; i++) {
                 game.getCurrentPlayer().addPlayerSpace();
@@ -82,14 +82,14 @@ public class GameController {
      *
      * @param space space where the player landed
      */
-    public void handleSpace(Space space) {
-        if(space.getName().equals("Orange Space")) {
+    public void handleSpace(String insertSpace) {
+        if(insertSpace.equals("Orange Space")) {
 //           game.getCurrentPlayer()
-        } else if(space.getName().equals("Blue Space")) {
+        } else if(insertSpace.equals("Blue Space")) {
 //            game.getCurrentPlayer()
-        } else if(space.getName().equals("Green Space")) {
+        } else if(insertSpace.equals("Green Space")) {
 //            game.getCurrentPlayer()
-        } else if(space.getName().equals("Magenta Space")) {
+        } else if(insertSpace.equals("Magenta Space")) {
 //            game.getCurrentPlayer()
         }
     }
