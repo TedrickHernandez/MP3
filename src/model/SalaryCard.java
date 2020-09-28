@@ -12,6 +12,11 @@ public class SalaryCard
         salaryCardTaxDue = insertSalaryCardTaxDue;
     }
 
+    public void setSalaryCardPicked (boolean insertPicked)
+    {
+        salaryCardPicked = insertPicked;
+    }
+
     public int getSalaryCardValue ()
     {
         return salaryCardValue;

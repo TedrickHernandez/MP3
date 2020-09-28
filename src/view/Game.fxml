@@ -3,12 +3,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="373.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="550.0">
          <children>
             <Label fx:id="label_playerNo" contentDisplay="CENTER" text="Player N" />
             <Label fx:id="label_playerCash" text="\$?" />
+            <Label fx:id="label_playerCareer" text="Career?" />
+            <Label fx:id="label_playerSalary" text="Salary?" />
+            <Label fx:id="label_playerTaxDue" text="Tax Due?" />
+            <Label fx:id="label_playerMarried" text="Married?" />
+            <Label fx:id="label_playerChildren" text="Children" />
+            <Label fx:id="label_playerHouse" text="House?" />
+            <Label fx:id="label_playerLoans" text="Loans?" />
          </children></HBox>
       <HBox AnchorPane.bottomAnchor="373.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

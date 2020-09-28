@@ -29,6 +29,27 @@ public class GameController {
     @FXML
     private Label label_playerCash;
 
+    @FXML
+    private Label label_playerCareer;
+
+    @FXML
+    private Label label_playerSalary;
+
+    @FXML
+    private Label label_playerTaxDue;
+
+    @FXML
+    private Label label_playerMarried;
+
+    @FXML
+    private Label label_playerChildren;
+
+    @FXML
+    private Label label_playerHouse;
+
+    @FXML
+    private Label label_playerLoans;
+
     public GameController(int numPlayers) {
         this.numPlayers = numPlayers;
         game = new Game(numPlayers);
@@ -56,24 +77,25 @@ public class GameController {
 //            stage.setScene(gameEndLoader.load());
             stage.setMaximized(false);
         } else {
-            Stage stage = new Stage();
+            /*Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.initModality(Modality.APPLICATION_MODAL);
 
-            stage.showAndWait();
+            stage.showAndWait();*/
 
             Random random = new Random();
             int rolled = random.nextInt(10) + 1;
+            System.out.println(game.getCurrentPlayer().getPlayerID() + " has rolled " + rolled);
 
             String spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).removePlayer(game.getCurrentPlayer());
             for(int i = 0; i < rolled; i++) {
                 game.getCurrentPlayer().addPlayerSpace();
                 spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
+                System.out.println(game.getCurrentPlayer().getPlayerID() + " has landed on a/n " + spaceLanded);
 
                 // magenta space so break
                 //if(game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName().equals("Magenta Space")) break;
-                /* @TODO Change to if */
                 switch (game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName())
                 {
                     case "Retirement Space":
@@ -92,6 +114,24 @@ public class GameController {
             if(turn >= game.getActivePlayers().size()) {
                 turn = 0;
             }
+            game.setTurn(turn);
+
+            label_playerNo.setText("Player " + game.getCurrentPlayer().getPlayerID());
+            label_playerCash.setText("PHP " + game.getCurrentPlayer().getPlayerCash());
+            label_playerCareer.setText(game.getCurrentPlayer().getPlayerCareer());
+            label_playerSalary.setText("SAL: " + game.getCurrentPlayer().getPlayerSalary());
+            label_playerTaxDue.setText("TAX: " +  game.getCurrentPlayer().getPlayerTaxDue());
+            if (game.getCurrentPlayer().getPlayerMarried() == true)
+            {
+                label_playerMarried.setText("Married");
+            }
+            else
+            {
+                label_playerMarried.setText("Single");
+            }
+            label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
+            label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse());
+            label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
         }
         if(game.getActivePlayers().size() == 0) rollButton.setText("End Game");
     }
@@ -142,13 +182,35 @@ public class GameController {
             else
             {
                 CareerCard insertCareerCard = game.getCareerCardDeck().pickTopCareerCard(false);
-                String insertCareer = insertCareerCard.getCareerCardName(); /* @TODO Do same thing as career card */
-                game.getActivePlayers().add(new Player(insertCareer, 0, 0, getPathController.returnPath()));
+                SalaryCard insertSalaryCard = game.getSalaryCardDeck().pickTopSalaryCard();
+                String insertCareer = insertCareerCard.getCareerCardName();
+                int insertSalary = insertSalaryCard.getSalaryCardValue();
+                int insertTaxDue = insertSalaryCard.getSalaryCardTaxDue();
+                game.getActivePlayers().add(new Player(insertCareer, insertSalary, insertTaxDue, getPathController.returnPath()));
             }
 
             System.out.println(game.getActivePlayers().get(i).getPlayerID());
             System.out.println(game.getActivePlayers().get(i).getPlayerCareer());
             System.out.println(game.getActivePlayers().get(i).getPath().getName());
+            System.out.println(game.getActivePlayers().get(i).getPlayerSalary());
+            System.out.println(game.getActivePlayers().get(i).getPlayerTaxDue());
         }
+
+        label_playerNo.setText("Player " + game.getCurrentPlayer().getPlayerID());
+        label_playerCash.setText("PHP " + game.getCurrentPlayer().getPlayerCash());
+        label_playerCareer.setText(game.getCurrentPlayer().getPlayerCareer());
+        label_playerSalary.setText("SAL: " + game.getCurrentPlayer().getPlayerSalary());
+        label_playerTaxDue.setText("TAX: " +  game.getCurrentPlayer().getPlayerTaxDue());
+        if (game.getCurrentPlayer().getPlayerMarried() == true)
+        {
+            label_playerMarried.setText("Married");
+        }
+        else
+        {
+            label_playerMarried.setText("Single");
+        }
+        label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
+        label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse());
+        label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
     }
 }

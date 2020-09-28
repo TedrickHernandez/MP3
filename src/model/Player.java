@@ -88,4 +88,9 @@ public class Player
     {
         return playerID;
     }
+
+    public boolean getPlayerMarried ()
+    {
+        return playerMarried;
+    }
 }

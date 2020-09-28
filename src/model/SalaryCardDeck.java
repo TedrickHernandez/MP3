@@ -24,4 +24,15 @@ public class SalaryCardDeck
     }
 
     /* @TODO Create the same thing from CareerCardDeck */
+    public SalaryCard pickTopSalaryCard ()
+    {
+        for (int i = 0; i < salaryCards.size(); i ++) {
+            if (salaryCards.get(i).getSalaryCardPicked() == false)
+            {
+                salaryCards.get(i).setSalaryCardPicked(true);
+                return salaryCards.get(i);
+            }
+        }
+        return null;
+    }
 }
