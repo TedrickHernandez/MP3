@@ -70,7 +70,7 @@ public class GameController {
             handleSpace(spaceLanded);
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).addPlayer(game.getCurrentPlayer());
 
-            turn++;
+            turn ++;
             if(turn == game.getActivePlayers().size()) {
                 turn = 0;
             }
