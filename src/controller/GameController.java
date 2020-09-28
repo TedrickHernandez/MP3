@@ -95,11 +95,11 @@ public class GameController {
     }
 
     public void startGame() throws IOException {
-        game.getActionCardDeck();
+        /*game.getActionCardDeck();
         game.getBlueCardDeck();
         game.getCareerCardDeck();
         game.getHouseCardDeck();
-        game.getSalaryCardDeck();
+        game.getSalaryCardDeck();*/
 
         // Make it in a way so that it'll loop (through buttons)
         for(int i = 0; i < this.numPlayers; i++) {
