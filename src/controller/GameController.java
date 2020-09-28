@@ -58,14 +58,24 @@ public class GameController {
             Random random = new Random();
             int rolled = random.nextInt(10) + 1;
 
-            String spaceLanded = game.getCurrentPlayer().getPath().getSpaces()[game.getCurrentPlayer().getPlayerSpace()];
+            String spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).removePlayer(game.getCurrentPlayer());
             for(int i = 0; i < rolled; i++) {
                 game.getCurrentPlayer().addPlayerSpace();
-                spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace());
+                spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
 
                 // magenta space so break
-                if(game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName().equals("Magenta Space")) break;
+                //if(game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName().equals("Magenta Space")) break;
+                switch (game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName())
+                {
+                    case "Retirement Space":
+                    case "Career Choice Space":
+                    case "Get Married Space":
+                    case "Buy House Space":
+                    case "Graduation Space":
+                        i = rolled;
+                        break;
+                }
             }
             handleSpace(spaceLanded);
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).addPlayer(game.getCurrentPlayer());
@@ -80,7 +90,7 @@ public class GameController {
 
     /**
      *
-     * @param space space where the player landed
+     * @param insertSpace String name of the landed space.
      */
     public void handleSpace(String insertSpace) {
         if(insertSpace.equals("Orange Space")) {
