@@ -87,6 +87,16 @@ public class GameController {
             int rolled = random.nextInt(10) + 1;
             System.out.println(game.getCurrentPlayer().getPlayerID() + " has rolled " + rolled);
 
+            Stage diceNotifStage = new Stage();
+            diceNotifStage.initStyle(StageStyle.UTILITY);
+            diceNotifStage.initModality(Modality.APPLICATION_MODAL);
+
+            FXMLLoader diceNotifLoader = new FXMLLoader(getClass().getResource("/view/DiceNotif.fxml"));
+            DiceNotifController diceNotifController = new DiceNotifController(game.getCurrentPlayer().getPlayerID(), rolled);
+            diceNotifLoader.setController(diceNotifController);
+            diceNotifStage.setScene(new Scene(diceNotifLoader.load()));
+            diceNotifStage.showAndWait();
+
             String spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).removePlayer(game.getCurrentPlayer());
             for(int i = 0; i < rolled; i++) {
