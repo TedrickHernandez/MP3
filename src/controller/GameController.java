@@ -93,7 +93,8 @@ public class GameController {
             stage.showAndWait();*/
 
             Random random = new Random();
-            int rolled = random.nextInt(10) + 1;
+            // int rolled = random.nextInt(10) + 1;
+            int rolled = 40;
             System.out.println(game.getCurrentPlayer().getPlayerID() + " has rolled " + rolled);
 
             Stage diceNotifStage = new Stage();
@@ -117,6 +118,7 @@ public class GameController {
                 {
                     switch (game.getCurrentPlayer().getPlayerPath().getName())
                     {
+                        /* Single Path Traversals */
                         case "College Path":
                         case "Career Path":
                             game.getCurrentPlayer().setPath(game.getMixedPath1());
@@ -126,7 +128,22 @@ public class GameController {
                             game.getCurrentPlayer().setPath(game.getMixedPath2());
                             break;
                         case "Mixed Path 2":
-                            game.getCurrentPlayer().getPath(game.getREtirementPath());
+                            game.getCurrentPlayer().setPath(game.getRetirementPath());
+                            break;
+
+                            /* Multiple Path Traversals */
+
+                        case "Mixed Path 1":
+                            Stage getPathStage = new Stage();
+                            getPathStage.initStyle(StageStyle.UNDECORATED);
+                            getPathStage.initModality(Modality.APPLICATION_MODAL);
+                            FXMLLoader getPathLoader = new FXMLLoader(getClass().getResource("/view/GetPath.fxml"));
+                            GetPathController getPathController = new GetPathController(game.getCurrentPlayer().getPlayerID(), game.getChangeCareerPath(), game.getStartFamilyPath());
+                            getPathLoader.setController(getPathController);
+                            getPathStage.setScene(new Scene(getPathLoader.load()));
+                            getPathStage.showAndWait();
+                            Path chosenPath = getPathController.returnPath();
+                            game.getCurrentPlayer().setPath(chosenPath);
                             break;
                     }
                 }
@@ -152,11 +169,13 @@ public class GameController {
             handleSpace(spaceLanded);
             // game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).addPlayer(game.getCurrentPlayer());
 
-            turn ++;
-            if(turn >= game.getActivePlayers().size()) {
-                turn = 0;
+            if (spaceLanded != "Retirement Space") {
+                turn++;
+                if (turn >= game.getActivePlayers().size()) {
+                    turn = 0;
+                }
+                game.setTurn(turn);
             }
-            game.setTurn(turn);
 
             label_playerNo.setText("Player " + game.getCurrentPlayer().getPlayerID());
             label_playerCash.setText("PHP " + game.getCurrentPlayer().getPlayerCash());
@@ -185,7 +204,7 @@ public class GameController {
      *
      * @param insertSpace String name of the landed space.
      */
-    public void handleSpace(String insertSpace) {
+    public void handleSpace(String insertSpace) throws IOException {
         if(insertSpace.equals("Orange Space")) {
 //           game.getCurrentPlayer()
         } else if(insertSpace.equals("Blue Space")) {
@@ -194,6 +213,19 @@ public class GameController {
 //            game.getCurrentPlayer()
         } else if(insertSpace.equals("Pay Raise Space")) {
 //            game.getCurrentPlayer()
+        }
+        else if (insertSpace.equals("Retirement Space"))
+        {
+            Stage playerRetiresStage = new Stage();
+            playerRetiresStage.initStyle(StageStyle.UTILITY);
+            playerRetiresStage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader playerRetiresLoader = new FXMLLoader(getClass().getResource("/view/PlayerRetires.fxml"));
+            PlayerRetiresController playerRetiresController = new PlayerRetiresController(game.getCurrentPlayer().getPlayerID());
+            playerRetiresLoader.setController(playerRetiresController);
+            playerRetiresStage.setScene(new Scene(playerRetiresLoader.load()));
+            playerRetiresStage.showAndWait();
+            game.getActivePlayers().remove(turn);
+            game.getRetiredPlayers().add(game.getCurrentPlayer());
         }
     }
 

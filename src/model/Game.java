@@ -59,6 +59,7 @@ public class Game {
     public Path createRetirementPath ()
     {
         Path retirementPath = new Path("Retirement Path", null);
+        retirementPath.getSpaces().add(new Space("Orange Space"));
         retirementPath.getSpaces().add(new Space("Retirement Space"));
 
         return retirementPath;
