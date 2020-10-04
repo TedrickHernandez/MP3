@@ -50,13 +50,22 @@ public class GameController {
     @FXML
     private Label label_playerLoans;
 
+    @FXML
+    private Label label_playerPath;
+
+    @FXML
+    private Label label_playerSpace;
+
+    @FXML
+    private Label label_playerSpaceType;
+
     public GameController(int numPlayers) {
         this.numPlayers = numPlayers;
         game = new Game(numPlayers);
     }
 
     @FXML
-    public void onClickBackToMenu(ActionEvent ae) throws IOException {
+    /*public void onClickBackToMenu(ActionEvent ae) throws IOException {
         Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
 
         FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/view/Menu.fxml"));
@@ -64,7 +73,7 @@ public class GameController {
         menuLoader.setController(menuController);
 
         stage.setScene(new Scene(menuLoader.load()));
-    }
+    }*/
 
     public void rollDice(ActionEvent ae) throws IOException {
         if(game.getActivePlayers().size() == 0) {
@@ -100,7 +109,30 @@ public class GameController {
             String spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
             game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).removePlayer(game.getCurrentPlayer());
             for(int i = 0; i < rolled; i++) {
+
+                /* Path Traversal Codes */
+
+                if (game.getCurrentPlayer().getPlayerSpace() >= game.getCurrentPlayer().getPlayerPath().getNSpaces() - 1)
+                // if (game.getCurrentPlayer().getPlayerSpace() >= 5)
+                {
+                    switch (game.getCurrentPlayer().getPlayerPath().getName())
+                    {
+                        case "College Path":
+                        case "Career Path":
+                            game.getCurrentPlayer().setPath(game.getMixedPath1());
+                            break;
+                        case "Change Career Path":
+                        case "Start Family Path":
+                            game.getCurrentPlayer().setPath(game.getMixedPath2());
+                            break;
+                        case "Mixed Path 2":
+                            game.getCurrentPlayer().getPath(game.getREtirementPath());
+                            break;
+                    }
+                }
+
                 game.getCurrentPlayer().addPlayerSpace();
+
                 spaceLanded = game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName();
                 System.out.println(game.getCurrentPlayer().getPlayerID() + " has landed on a/n " + spaceLanded);
 
@@ -118,7 +150,7 @@ public class GameController {
                 }
             }
             handleSpace(spaceLanded);
-            game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).addPlayer(game.getCurrentPlayer());
+            // game.getCurrentPlayer().getPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).addPlayer(game.getCurrentPlayer());
 
             turn ++;
             if(turn >= game.getActivePlayers().size()) {
@@ -142,6 +174,9 @@ public class GameController {
             label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
             label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse());
             label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
+            label_playerPath.setText(game.getCurrentPlayer().getPlayerPath().getName());
+            label_playerSpace.setText("Space: " + game.getCurrentPlayer().getPlayerSpace());
+            label_playerSpaceType.setText(game.getCurrentPlayer().getPlayerPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName());
         }
         if(game.getActivePlayers().size() == 0) rollButton.setText("End Game");
     }
@@ -188,6 +223,7 @@ public class GameController {
             Path chosenPath = getPathController.returnPath();
             if (chosenPath.getName().equals("College Path")) {
                 game.getActivePlayers().add(new Player("College", 0, 0, getPathController.returnPath()));
+                // game.getActivePlayers().add(new Player("College", 0, 0, game.getMixedPath1()));
             }
             else
             {
@@ -222,5 +258,8 @@ public class GameController {
         label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
         label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse());
         label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
+        label_playerPath.setText(game.getCurrentPlayer().getPlayerPath().getName());
+        label_playerSpace.setText("Space: " + game.getCurrentPlayer().getPlayerSpace());
+        label_playerSpaceType.setText(game.getCurrentPlayer().getPlayerPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName());
     }
 }

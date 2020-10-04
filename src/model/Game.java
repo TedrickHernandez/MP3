@@ -10,7 +10,8 @@ public class Game {
     private CareerCardDeck careerCardDeck = new CareerCardDeck();
     private SalaryCardDeck salaryCardDeck = new SalaryCardDeck();
     private HouseCardDeck houseCardDeck = new HouseCardDeck();
-    private Path collegePath, careerPath;
+    private Path collegePath, careerPath, mixedPath1, mixedPath2, retirementPath;
+    private Path changeCareerPath, startFamilyPath;
     private int turn = 0;
 
     public Game(int numPlayers) {
@@ -42,17 +43,17 @@ public class Game {
         careerPath = new Path("Career Path", careerPath2, changeCareerPath);
         collegePath = new Path("College Path", careerPath2);*/
 
-        Path RP = createRetirementPath();
-        Path MP2 = createMixedPath("Mixed Path 2", RP, null);
-        Path CCP = createChangeCareerPath("Change Career Path", MP2, null);
-        Path SFP = createStartFamilyPath("Start Family Path", MP2, null);
-        Path MP1 = createMixedPath("Mixed Path 1", CCP, SFP);
+        retirementPath = createRetirementPath();
+        mixedPath2 = createMixedPath("Mixed Path 2", retirementPath, null);
+        changeCareerPath = createChangeCareerPath("Change Career Path", mixedPath2, null);
+        startFamilyPath = createStartFamilyPath("Start Family Path", mixedPath2, null);
+        mixedPath1 = createMixedPath("Mixed Path 1", changeCareerPath, startFamilyPath);
         // Path startingPaths[] = {createCareerPath("Career Path", MP1, null), createCollegePath("College Path", MP1, null)};
 
         // return startingPaths;
 
-        careerPath = createCareerPath("Career Path", MP1, null);
-        collegePath = createCollegePath("College Path", MP1, null);
+        careerPath = createCareerPath("Career Path", mixedPath1, null);
+        collegePath = createCollegePath("College Path", mixedPath1, null);
     }
 
     public Path createRetirementPath ()
@@ -208,5 +209,30 @@ public class Game {
 
     public Path getCareerPath() {
         return careerPath;
+    }
+
+    public Path getMixedPath1 ()
+    {
+        return mixedPath1;
+    }
+
+    public Path getMixedPath2 ()
+    {
+        return mixedPath2;
+    }
+
+    public Path getRetirementPath ()
+    {
+        return retirementPath;
+    }
+
+    public Path getChangeCareerPath ()
+    {
+        return changeCareerPath;
+    }
+
+    public Path getStartFamilyPath ()
+    {
+        return startFamilyPath;
     }
 }

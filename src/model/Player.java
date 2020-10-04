@@ -93,4 +93,9 @@ public class Player
     {
         return playerMarried;
     }
+
+    public Path getPlayerPath ()
+    {
+        return path;
+    }
 }

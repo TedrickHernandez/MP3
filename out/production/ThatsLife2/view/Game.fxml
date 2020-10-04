@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -17,10 +18,28 @@
             <Label fx:id="label_playerHouse" text="House?" />
             <Label fx:id="label_playerLoans" text="Loans?" />
          </children></HBox>
-      <HBox AnchorPane.bottomAnchor="373.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="550.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="rollButton" mnemonicParsing="false" onAction="#rollDice" text="Roll" />
-            <Button mnemonicParsing="false" onAction="#onClickBackToMenu" text="Back to Menu" />
+            <Button fx:id="rollButton" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice" />
+         </children>
+      </HBox>
+      <HBox alignment="TOP_CENTER" layoutX="141.0" layoutY="234.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="525.0">
+         <children>
+            <Label fx:id="label_playerPath" alignment="CENTER" contentDisplay="CENTER" text="Path?">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_playerSpace" alignment="CENTER" contentDisplay="CENTER" text="Space?">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_playerSpaceType" alignment="CENTER" contentDisplay="CENTER" text="SpaceType?">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
    </children>
