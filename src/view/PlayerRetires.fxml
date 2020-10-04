@@ -2,12 +2,23 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="label_retireText" alignment="CENTER" contentDisplay="CENTER" text="Player retires!" />
-         </children></HBox>
+            <Label fx:id="label_retireText" alignment="CENTER" contentDisplay="CENTER" text="Player has retired!">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="label_initialCashText" text="Initial Cash" />
+            <Label fx:id="label_childCashText" text="Child Cash Bonus" />
+            <Label fx:id="label_houseSellText" text="House Sell Price" />
+            <Label fx:id="label_loansText" text="Loan Deduction" />
+            <Label fx:id="label_finalCashText" text="Final Cash" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

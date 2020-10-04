@@ -11,12 +11,12 @@ public class Player
     private int playerLoans = 0;
     private int playerSpace = 0;
     private int playerChildren = 0;
-    private String playerHouse = "Homeless";
+    private HouseCard playerHouse;
     private String playerCareer;
     private boolean playerMarried = false;
     private Path path;
 
-    public Player (String insertCareer, int insertSalary, int insertTaxDue, Path insertPath)
+    public Player (String insertCareer, int insertSalary, int insertTaxDue, Path insertPath, HouseCard insertHouse)
     {
         playerCount ++;
         playerID = playerCount;
@@ -24,6 +24,7 @@ public class Player
         playerSalary = insertSalary;
         playerTaxDue = insertTaxDue;
         path = insertPath;
+        playerHouse = insertHouse;
         // playerSpace = insertSpace;
     }
 
@@ -74,7 +75,7 @@ public class Player
         return playerChildren;
     }
 
-    public String getPlayerHouse ()
+    public HouseCard getPlayerHouse ()
     {
         return playerHouse;
     }

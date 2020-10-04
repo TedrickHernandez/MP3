@@ -191,7 +191,7 @@ public class GameController {
                 label_playerMarried.setText("Single");
             }
             label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
-            label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse());
+            label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse().getHouseCardName());
             label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
             label_playerPath.setText(game.getCurrentPlayer().getPlayerPath().getName());
             label_playerSpace.setText("Space: " + game.getCurrentPlayer().getPlayerSpace());
@@ -220,7 +220,8 @@ public class GameController {
             playerRetiresStage.initStyle(StageStyle.UTILITY);
             playerRetiresStage.initModality(Modality.APPLICATION_MODAL);
             FXMLLoader playerRetiresLoader = new FXMLLoader(getClass().getResource("/view/PlayerRetires.fxml"));
-            PlayerRetiresController playerRetiresController = new PlayerRetiresController(game.getCurrentPlayer().getPlayerID());
+            PlayerRetiresController playerRetiresController = new PlayerRetiresController(game.getCurrentPlayer().getPlayerID(), game.getCurrentPlayer().getPlayerCash(),
+                    game.getCurrentPlayer().getPlayerChildren(), game.getCurrentPlayer().getPlayerHouse(), game.getCurrentPlayer().getPlayerLoans());
             playerRetiresLoader.setController(playerRetiresController);
             playerRetiresStage.setScene(new Scene(playerRetiresLoader.load()));
             playerRetiresStage.showAndWait();
@@ -235,6 +236,7 @@ public class GameController {
         game.getCareerCardDeck();
         game.getHouseCardDeck();
         game.getSalaryCardDeck();*/
+        HouseCard homelessHouseCard = new HouseCard(0, 0, "Homeless");
 
         // Make it in a way so that it'll loop (through buttons)
         for(int i = 0; i < this.numPlayers; i++) {
@@ -254,7 +256,7 @@ public class GameController {
 
             Path chosenPath = getPathController.returnPath();
             if (chosenPath.getName().equals("College Path")) {
-                game.getActivePlayers().add(new Player("College", 0, 0, getPathController.returnPath()));
+                game.getActivePlayers().add(new Player("College", 0, 0, getPathController.returnPath(), homelessHouseCard));
                 // game.getActivePlayers().add(new Player("College", 0, 0, game.getMixedPath1()));
             }
             else
@@ -264,7 +266,7 @@ public class GameController {
                 String insertCareer = insertCareerCard.getCareerCardName();
                 int insertSalary = insertSalaryCard.getSalaryCardValue();
                 int insertTaxDue = insertSalaryCard.getSalaryCardTaxDue();
-                game.getActivePlayers().add(new Player(insertCareer, insertSalary, insertTaxDue, getPathController.returnPath()));
+                game.getActivePlayers().add(new Player(insertCareer, insertSalary, insertTaxDue, getPathController.returnPath(), homelessHouseCard));
             }
 
             System.out.println(game.getActivePlayers().get(i).getPlayerID());
@@ -288,7 +290,7 @@ public class GameController {
             label_playerMarried.setText("Single");
         }
         label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
-        label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse());
+        label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse().getHouseCardName());
         label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
         label_playerPath.setText(game.getCurrentPlayer().getPlayerPath().getName());
         label_playerSpace.setText("Space: " + game.getCurrentPlayer().getPlayerSpace());

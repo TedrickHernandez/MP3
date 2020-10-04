@@ -23,11 +23,36 @@ public class PlayerRetiresController implements Initializable {
     @FXML
     private Label label_retireText;
 
-    private int displayPlayerID;
+    @FXML
+    private Label label_initialCashText;
 
-    public PlayerRetiresController (int insertPlayerID)
+    @FXML
+    private Label label_childCashText;
+
+    @FXML
+    private Label label_houseSellText;
+
+    @FXML
+    private Label label_loansText;
+
+    @FXML
+    private Label label_finalCashText;
+
+    private int displayPlayerID;
+    private int displayPlayerInitialCash;
+    private int displayChildCash;
+    private HouseCard displayHouseSell;
+    private int displayLoans;
+    private int displayFinalCash;
+
+    public PlayerRetiresController (int insertPlayerID, int insertPlayerInitialCash, int insertPlayerChildren,
+                                    HouseCard insertPlayerHouse, int insertPlayerLoans)
     {
         displayPlayerID = insertPlayerID;
+        displayPlayerInitialCash = insertPlayerInitialCash;
+        displayChildCash = insertPlayerChildren;
+        /* Put house card here */
+        displayLoans = insertPlayerLoans;
     }
 
     @Override
