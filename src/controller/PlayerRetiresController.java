@@ -50,7 +50,7 @@ public class PlayerRetiresController implements Initializable {
     {
         int childCashTotal = displayChildCash * 10000;
         int loanCashTotal = displayLoans * -25000;
-        finalCashTotal = displayPlayerInitialCash + (displayChildCash * 10000) + displayHouseSell.getHouseCardSellValue() - (displayLoans * -25000);
+        finalCashTotal = displayPlayerInitialCash + (displayChildCash * 10000) + displayHouseSell.getHouseCardSellValue() + (displayLoans * -25000);
         label_retireText.setText("Player " + displayPlayerID + " has retired!");
         label_initialCashText.setText("Initial Cash: PHP " + displayPlayerInitialCash);
         label_childCashText.setText("Child Cash Bonus: " + displayChildCash + " x PHP 10000 = PHP " + childCashTotal);

@@ -101,8 +101,8 @@ public class GameController {
             stage.showAndWait();*/
 
             Random random = new Random();
-            // int rolled = random.nextInt(10) + 1;
-            int rolled = 40;
+            int rolled = random.nextInt(10) + 1;
+            // int rolled = 40;
             System.out.println(game.getCurrentPlayer().getPlayerID() + " has rolled " + rolled);
 
             Stage diceNotifStage = new Stage();
@@ -214,7 +214,227 @@ public class GameController {
      */
     public void handleSpace(String insertSpace) throws IOException {
         if(insertSpace.equals("Orange Space")) {
-//           game.getCurrentPlayer()
+            String cardType = game.getActionCardDeck().getActionCards().get(game.getActionCardDeck().getActionCardIndex()).getActionCardType();
+            String cardTitle = game.getActionCardDeck().getActionCards().get(game.getActionCardDeck().getActionCardIndex()).getActionCardTitle();
+            int cardValue = game.getActionCardDeck().getActionCards().get(game.getActionCardDeck().getActionCardIndex()).getActionCardValue();
+
+            Stage landOrangeSpaceStage = new Stage();
+            landOrangeSpaceStage.initStyle(StageStyle.UTILITY);
+            landOrangeSpaceStage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader landOrangeSpaceLoader = new FXMLLoader(getClass().getResource("/view/LandOrangeSpace.fxml"));
+            LandOrangeSpaceController landOrangeSpaceController = new LandOrangeSpaceController(game.getCurrentPlayer().getPlayerID(), cardType, cardTitle, cardValue);
+            landOrangeSpaceLoader.setController(landOrangeSpaceController);
+            landOrangeSpaceStage.setScene(new Scene(landOrangeSpaceLoader.load()));
+            landOrangeSpaceStage.showAndWait();
+
+            switch (cardType)
+            {
+                case "Collect from the Bank":
+                    game.getCurrentPlayer().addPlayerCash(cardValue);
+                    break;
+
+                case "Pay the Bank":
+                    game.getCurrentPlayer().reducePlayerCash(cardValue);
+                    break;
+
+                case "Pay the Player/s":
+                    switch (cardTitle) {
+                        case "Lawsuit":
+                            switch (game.getActivePlayers().size()) {
+                                case 1:
+                                    game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                    break;
+                                case 2:
+                                    switch (turn) {
+                                        case 0:
+                                            game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                            game.getActivePlayers().get(turn + 1).addPlayerCash(cardValue);
+                                            break;
+                                        case 1:
+                                            game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                            game.getActivePlayers().get(turn - 1).addPlayerCash(cardValue);
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    Player player1 = null;
+                                    Player player2 = null;
+                                    int chosenPlayerID;
+                                    switch (turn)
+                                    {
+                                        case 0:
+                                            player1 = game.getActivePlayers().get(turn + 1);
+                                            player2 = game.getActivePlayers().get(turn + 2);
+                                            break;
+                                        case 1:
+                                            player1 = game.getActivePlayers().get(turn - 1);
+                                            player2 = game.getActivePlayers().get(turn + 1);
+                                            break;
+                                        case 2:
+                                            player1 = game.getActivePlayers().get(turn - 2);
+                                            player2 = game.getActivePlayers().get(turn - 1);
+                                            break;
+                                    }
+                                    Stage choosePlayerStage = new Stage();
+                                    choosePlayerStage.initStyle(StageStyle.UNDECORATED);
+                                    choosePlayerStage.initModality(Modality.APPLICATION_MODAL);
+                                    FXMLLoader choosePlayerLoader = new FXMLLoader(getClass().getResource("/view/ChoosePlayer.fxml"));
+                                    ChoosePlayerController choosePlayerController = new ChoosePlayerController(player1, player2);
+                                    choosePlayerLoader.setController(choosePlayerController);
+                                    choosePlayerStage.setScene(new Scene(choosePlayerLoader.load()));
+                                    choosePlayerStage.showAndWait();
+                                    chosenPlayerID = choosePlayerController.returnPlayerID();
+
+                                    game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                    switch (chosenPlayerID)
+                                    {
+                                        case 1:
+                                            game.getActivePlayers().get(0).addPlayerCash(cardValue);
+                                            break;
+                                        case 2:
+                                            game.getActivePlayers().get(1).addPlayerCash(cardValue);
+                                            break;
+                                        case 3:
+                                            game.getActivePlayers().get(2).addPlayerCash(cardValue);
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case "Christmas Bonus":
+                            switch (turn)
+                            {
+                                case 0:
+                                    game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                    game.getActivePlayers().get(turn + 1).addPlayerCash(cardValue);
+                                    if (game.getActivePlayers().size() == 3)
+                                    {
+                                        game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                        game.getActivePlayers().get(turn + 2).addPlayerCash(cardValue);
+                                    }
+                                    break;
+                                case 1:
+                                    game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                    game.getActivePlayers().get(turn - 1).addPlayerCash(cardValue);
+                                    if (game.getActivePlayers().size() == 3)
+                                    {
+                                        game.getCurrentPlayer().reducePlayerCash(cardValue);
+                                        game.getActivePlayers().get(turn + 1).addPlayerCash(cardValue);
+                                    }
+                                    break;
+                                case 2:
+                                    game.getCurrentPlayer().reducePlayerCash(cardValue * 2);
+                                    game.getActivePlayers().get(turn - 2).addPlayerCash(cardValue);
+                                    game.getActivePlayers().get(turn - 1).addPlayerCash(cardValue);
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+                case "Collect from Player/s":
+                    switch (cardTitle) {
+                        case "File a Lawsuit":
+                            switch (game.getActivePlayers().size()) {
+                                case 1:
+                                    game.getCurrentPlayer().addPlayerCash(cardValue);
+                                    break;
+                                case 2:
+                                    switch (turn) {
+                                        case 0:
+                                            game.getCurrentPlayer().addPlayerCash(cardValue);
+                                            game.getActivePlayers().get(turn + 1).reducePlayerCash(cardValue);
+                                            break;
+                                        case 1:
+                                            game.getCurrentPlayer().addPlayerCash(cardValue);
+                                            game.getActivePlayers().get(turn - 1).reducePlayerCash(cardValue);
+                                            break;
+                                    }
+                                    break;
+                                case 3:
+                                    Player player1 = null;
+                                    Player player2 = null;
+                                    int chosenPlayerID;
+                                    switch (turn)
+                                    {
+                                        case 0:
+                                            player1 = game.getActivePlayers().get(turn + 1);
+                                            player2 = game.getActivePlayers().get(turn + 2);
+                                            break;
+                                        case 1:
+                                            player1 = game.getActivePlayers().get(turn - 1);
+                                            player2 = game.getActivePlayers().get(turn + 1);
+                                            break;
+                                        case 2:
+                                            player1 = game.getActivePlayers().get(turn - 2);
+                                            player2 = game.getActivePlayers().get(turn - 1);
+                                            break;
+                                    }
+                                    Stage choosePlayerStage = new Stage();
+                                    choosePlayerStage.initStyle(StageStyle.UNDECORATED);
+                                    choosePlayerStage.initModality(Modality.APPLICATION_MODAL);
+                                    FXMLLoader choosePlayerLoader = new FXMLLoader(getClass().getResource("/view/ChoosePlayer.fxml"));
+                                    ChoosePlayerController choosePlayerController = new ChoosePlayerController(player1, player2);
+                                    choosePlayerLoader.setController(choosePlayerController);
+                                    choosePlayerStage.setScene(new Scene(choosePlayerLoader.load()));
+                                    choosePlayerStage.showAndWait();
+                                    chosenPlayerID = choosePlayerController.returnPlayerID();
+
+                                    game.getCurrentPlayer().addPlayerCash(cardValue);
+                                    switch (chosenPlayerID)
+                                    {
+                                        case 1:
+                                            game.getActivePlayers().get(0).reducePlayerCash(cardValue);
+                                            break;
+                                        case 2:
+                                            game.getActivePlayers().get(1).reducePlayerCash(cardValue);
+                                            break;
+                                        case 3:
+                                            game.getActivePlayers().get(2).reducePlayerCash(cardValue);
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case "It's Your Birthday":
+                            switch (turn)
+                            {
+                                case 0:
+                                    game.getCurrentPlayer().addPlayerCash(cardValue);
+                                    game.getActivePlayers().get(turn + 1).reducePlayerCash(cardValue);
+                                    if (game.getActivePlayers().size() == 3)
+                                    {
+                                        game.getCurrentPlayer().addPlayerCash(cardValue);
+                                        game.getActivePlayers().get(turn + 2).reducePlayerCash(cardValue);
+                                    }
+                                    break;
+                                case 1:
+                                    game.getCurrentPlayer().addPlayerCash(cardValue);
+                                    game.getActivePlayers().get(turn - 1).reducePlayerCash(cardValue);
+                                    if (game.getActivePlayers().size() == 3)
+                                    {
+                                        game.getCurrentPlayer().addPlayerCash(cardValue);
+                                        game.getActivePlayers().get(turn + 1).reducePlayerCash(cardValue);
+                                    }
+                                    break;
+                                case 2:
+                                    game.getCurrentPlayer().addPlayerCash(cardValue * 2);
+                                    game.getActivePlayers().get(turn - 2).reducePlayerCash(cardValue);
+                                    game.getActivePlayers().get(turn - 1).reducePlayerCash(cardValue);
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+            }
+            if (game.getActionCardDeck().getActionCardIndex() > game.getActionCardDeck().getActionCardAmount())
+            {
+                game.getActionCardDeck().resetActionCardDeck();
+            }
+            else
+            {
+                game.getActionCardDeck().addActionCardIndex();
+            }
+
         } else if(insertSpace.equals("Blue Space")) {
 //            game.getCurrentPlayer()
         } else if(insertSpace.equals("Green Space")) {
@@ -236,6 +456,14 @@ public class GameController {
             game.getCurrentPlayer().setPlayerFinalCash(playerRetiresController.getPlayerFinalCash());
             game.getRetiredPlayers().add(game.getCurrentPlayer());
             game.getActivePlayers().remove(turn);
+        }
+
+        for (int i = 0; i < game.getActivePlayers().size(); i ++)
+        {
+            while (game.getActivePlayers().get(i).getPlayerCash() < 0)
+            {
+                game.getActivePlayers().get(i).addPlayerLoan();
+            }
         }
     }
 

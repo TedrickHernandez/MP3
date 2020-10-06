@@ -111,4 +111,20 @@ public class Player
     {
         return playerFinalCash;
     }
+
+    public void addPlayerLoan ()
+    {
+        playerCash += 20000;
+        playerLoans += 1;
+    }
+
+    public void addPlayerCash (int insertAddCash)
+    {
+        playerCash += insertAddCash;
+    }
+
+    public void reducePlayerCash (int insertReduceCash)
+    {
+        playerCash -= insertReduceCash;
+    }
 }

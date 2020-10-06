@@ -67,4 +67,20 @@ public class ActionCardDeck
     {
         return actionCardIndex;
     }
+
+    public ArrayList<ActionCard> getActionCards ()
+    {
+        return actionCards;
+    }
+
+    public void resetActionCardDeck ()
+    {
+        shuffleActionCards();
+        actionCardIndex = 0;
+    }
+
+    public void addActionCardIndex ()
+    {
+        actionCardIndex ++;
+    }
 }
