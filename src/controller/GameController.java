@@ -3,7 +3,6 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -77,14 +76,23 @@ public class GameController {
 
     public void rollDice(ActionEvent ae) throws IOException {
         if(game.getActivePlayers().size() == 0) {
-            Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+            /* Final comparisons */
+            int winnerID = 0, winnerID2 = 0, winnerCash = 0, drawGame = 0;
+            game.determineWinner();
+            winnerID = game.getWinnerID();
+            winnerID2 = game.getWinnerID2();
+            winnerCash = game.getWinnerFinalCash();
+            drawGame = game.getDrawGame();
 
-//            FXMLLoader gameEndLoader = new FXMLLoader(getClass().getResource(""));
-//            GameEndController gameEndController = new GameEndController();
-//            gameEndLoader.setController(gameEndLoader);
-
-//            stage.setScene(gameEndLoader.load());
-            stage.setMaximized(false);
+            /* Display results */
+            Stage retirementScreenStage = new Stage();
+            retirementScreenStage.initStyle(StageStyle.UTILITY);
+            retirementScreenStage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader retirementScreenLoader = new FXMLLoader(getClass().getResource("/view/RetirementScreen.fxml"));
+            RetirementScreenController retirementScreenController = new RetirementScreenController(winnerID, winnerID2, winnerCash, drawGame);
+            retirementScreenLoader.setController(retirementScreenController);
+            retirementScreenStage.setScene(new Scene(retirementScreenLoader.load()));
+            retirementScreenStage.showAndWait();
         } else {
             /*Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
@@ -171,31 +179,31 @@ public class GameController {
 
             if (spaceLanded != "Retirement Space") {
                 turn++;
-                if (turn >= game.getActivePlayers().size()) {
-                    turn = 0;
-                }
-                game.setTurn(turn);
             }
 
-            label_playerNo.setText("Player " + game.getCurrentPlayer().getPlayerID());
-            label_playerCash.setText("PHP " + game.getCurrentPlayer().getPlayerCash());
-            label_playerCareer.setText(game.getCurrentPlayer().getPlayerCareer());
-            label_playerSalary.setText("SAL: " + game.getCurrentPlayer().getPlayerSalary());
-            label_playerTaxDue.setText("TAX: " +  game.getCurrentPlayer().getPlayerTaxDue());
-            if (game.getCurrentPlayer().getPlayerMarried() == true)
-            {
-                label_playerMarried.setText("Married");
+            if (turn >= game.getActivePlayers().size()) {
+                turn = 0;
             }
-            else
-            {
-                label_playerMarried.setText("Single");
+            game.setTurn(turn);
+
+            if (game.getActivePlayers().size() > 0) {
+                label_playerNo.setText("Player " + game.getCurrentPlayer().getPlayerID());
+                label_playerCash.setText("PHP " + game.getCurrentPlayer().getPlayerCash());
+                label_playerCareer.setText(game.getCurrentPlayer().getPlayerCareer());
+                label_playerSalary.setText("SAL: " + game.getCurrentPlayer().getPlayerSalary());
+                label_playerTaxDue.setText("TAX: " + game.getCurrentPlayer().getPlayerTaxDue());
+                if (game.getCurrentPlayer().getPlayerMarried() == true) {
+                    label_playerMarried.setText("Married");
+                } else {
+                    label_playerMarried.setText("Single");
+                }
+                label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
+                label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse().getHouseCardName());
+                label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
+                label_playerPath.setText(game.getCurrentPlayer().getPlayerPath().getName());
+                label_playerSpace.setText("Space: " + game.getCurrentPlayer().getPlayerSpace());
+                label_playerSpaceType.setText(game.getCurrentPlayer().getPlayerPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName());
             }
-            label_playerChildren.setText("Children: " + game.getCurrentPlayer().getPlayerChildren());
-            label_playerHouse.setText(game.getCurrentPlayer().getPlayerHouse().getHouseCardName());
-            label_playerLoans.setText("Loans: " + game.getCurrentPlayer().getPlayerLoans());
-            label_playerPath.setText(game.getCurrentPlayer().getPlayerPath().getName());
-            label_playerSpace.setText("Space: " + game.getCurrentPlayer().getPlayerSpace());
-            label_playerSpaceType.setText(game.getCurrentPlayer().getPlayerPath().getSpaces().get(game.getCurrentPlayer().getPlayerSpace()).getName());
         }
         if(game.getActivePlayers().size() == 0) rollButton.setText("End Game");
     }
@@ -225,17 +233,13 @@ public class GameController {
             playerRetiresLoader.setController(playerRetiresController);
             playerRetiresStage.setScene(new Scene(playerRetiresLoader.load()));
             playerRetiresStage.showAndWait();
-            game.getActivePlayers().remove(turn);
+            game.getCurrentPlayer().setPlayerFinalCash(playerRetiresController.getPlayerFinalCash());
             game.getRetiredPlayers().add(game.getCurrentPlayer());
+            game.getActivePlayers().remove(turn);
         }
     }
 
     public void startGame() throws IOException {
-        /*game.getActionCardDeck();
-        game.getBlueCardDeck();
-        game.getCareerCardDeck();
-        game.getHouseCardDeck();
-        game.getSalaryCardDeck();*/
         HouseCard homelessHouseCard = new HouseCard(0, 0, "Homeless");
 
         // Make it in a way so that it'll loop (through buttons)

@@ -14,6 +14,11 @@ public class Game {
     private Path changeCareerPath, startFamilyPath;
     private int turn = 0;
 
+    private int winnerID;
+    private int winnerID2;
+    private int winnerFinalCash;
+    private int drawGame;
+
     public Game(int numPlayers) {
         activePlayers = new ArrayList<>();
         retiredPlayers = new ArrayList<>();
@@ -235,5 +240,109 @@ public class Game {
     public Path getStartFamilyPath ()
     {
         return startFamilyPath;
+    }
+
+    public void determineWinner ()
+    {
+        int cash1 = 0, cash2 = 0, cash3 = 0;
+        cash1 = retiredPlayers.get(0).getPlayerFinalCash();
+        cash2 = retiredPlayers.get(1).getPlayerFinalCash();
+        if (retiredPlayers.size() > 2)
+        {
+            cash3 = retiredPlayers.get(2).getPlayerFinalCash();
+        }
+
+        if (cash1 > cash2)
+        {
+            if (cash1 > cash3)
+            {
+                winnerID = retiredPlayers.get(0).getPlayerID();
+                winnerFinalCash = cash1;
+            }
+            else
+            {
+                if (cash1 == cash3)
+                {
+                    winnerID = retiredPlayers.get(0).getPlayerID();
+                    winnerID2 = retiredPlayers.get(2).getPlayerID();
+                    winnerFinalCash = cash1;
+                    drawGame = 1;
+                }
+                else
+                {
+                    winnerID = retiredPlayers.get(2).getPlayerID();
+                    winnerFinalCash = cash3;
+                }
+            }
+        }
+        else
+        {
+            if (cash1 == cash2)
+            {
+                if (cash2 == cash3)
+                {
+                    winnerFinalCash = cash1;
+                    drawGame = 2;
+                }
+                else
+                {
+                    if (cash1 < cash3)
+                    {
+                        winnerID = retiredPlayers.get(2).getPlayerID();
+                        winnerFinalCash = cash3;
+                    }
+                    else
+                    {
+                        winnerID = retiredPlayers.get(0).getPlayerID();
+                        winnerID2 = retiredPlayers.get(1).getPlayerID();
+                        winnerFinalCash = cash1;
+                        drawGame = 1;
+                    }
+                }
+            }
+            else
+            {
+                if (cash2 == cash3)
+                {
+                    winnerID = retiredPlayers.get(1).getPlayerID();
+                    winnerID2 = retiredPlayers.get(2).getPlayerID();
+                    winnerFinalCash = cash2;
+                    drawGame = 1;
+                }
+                else
+                {
+                    if (cash2 > cash3)
+                    {
+                        winnerID = retiredPlayers.get(1).getPlayerID();
+                        winnerFinalCash = cash2;
+                    }
+                    else
+                    {
+                        winnerID = retiredPlayers.get(2).getPlayerID();
+                        winnerFinalCash = cash3;
+                    }
+                }
+            }
+        }
+    }
+
+    public int getWinnerID ()
+    {
+        return winnerID;
+    }
+
+    public int getWinnerID2 ()
+    {
+        return winnerID2;
+    }
+
+    public int getWinnerFinalCash ()
+    {
+        return winnerFinalCash;
+    }
+
+    public int getDrawGame ()
+    {
+        return drawGame;
     }
 }

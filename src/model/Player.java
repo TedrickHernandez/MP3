@@ -15,6 +15,7 @@ public class Player
     private String playerCareer;
     private boolean playerMarried = false;
     private Path path;
+    private int playerFinalCash;
 
     public Player (String insertCareer, int insertSalary, int insertTaxDue, Path insertPath, HouseCard insertHouse)
     {
@@ -40,6 +41,12 @@ public class Player
     public void addPlayerSpace() {
         playerSpace++;
     }
+
+    public void setPlayerFinalCash (int insertPlayerFinalCash)
+    {
+        playerFinalCash = insertPlayerFinalCash;
+    }
+
     public int getPlayerCash ()
     {
         return playerCash;
@@ -98,5 +105,10 @@ public class Player
     public Path getPlayerPath ()
     {
         return path;
+    }
+
+    public int getPlayerFinalCash ()
+    {
+        return playerFinalCash;
     }
 }
