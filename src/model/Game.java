@@ -141,9 +141,13 @@ public class Game {
     {
         Path careerPath = new Path(insertName, path1, path2);
 
-        for (int i = 0; i < 8; i ++) {
-            careerPath.getSpaces().add(new Space("Orange Space"));
+        for (int i = 0; i < 13; i ++) {
+            careerPath.getSpaces().add(new Space("Blue Space"));
         }
+
+        /*for (int i = 0; i < 8; i ++) {
+            careerPath.getSpaces().add(new Space("Orange Space"));
+        }*/
         careerPath.getSpaces().add(new Space("Get Married Space"));
         for (int i = 0; i < 5; i ++) {
             careerPath.getSpaces().add(new Space("Orange Space"));

@@ -54,12 +54,12 @@ public class Player
 
     public int getPlayerSalary ()
     {
-        return playerSalary;
+        return playerSalary + (10000 * playerPayRaises);
     }
 
     public int getPlayerTaxDue ()
     {
-        return playerTaxDue;
+        return playerTaxDue + (2000 * playerPayRaises);
     }
 
     public int getPlayerPayRaises ()

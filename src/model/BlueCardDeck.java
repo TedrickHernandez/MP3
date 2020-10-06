@@ -10,13 +10,13 @@ public class BlueCardDeck
     {
         int randomValue;
         randomValue = ((int) (Math.random() * (15 - 5 + 1) + 5)) * 10000;
-        blueCards.add(new BlueCard(randomValue, "Lawsuit"));
-        blueCards.add(new BlueCard(0, "Salary Tax Due"));
-        blueCards.add(new BlueCard(0, "Tip the Server"));
-        blueCards.add(new BlueCard(0, "Ski Accident"));
-        blueCards.add(new BlueCard(0, "Computer Repair"));
-        blueCards.add(new BlueCard(0, "World Cup"));
-        blueCards.add(new BlueCard(0, "F1 Race"));
+        blueCards.add(new BlueCard(randomValue, "Lawsuit", "Lawyer"));
+        blueCards.add(new BlueCard(0, "Salary Tax Due", "Accountant"));
+        blueCards.add(new BlueCard(0, "Tip the Server", "Server"));
+        blueCards.add(new BlueCard(0, "Ski Accident", "Doctor"));
+        blueCards.add(new BlueCard(0, "Computer Repair", "Computer Consultant"));
+        blueCards.add(new BlueCard(0, "World Cup", "Athlete"));
+        blueCards.add(new BlueCard(0, "F1 Race", "Racecar Driver"));
     }
 
     public void shuffleBlueCards ()
@@ -27,5 +27,21 @@ public class BlueCardDeck
     public int getBlueCardIndex ()
     {
         return blueCardIndex;
+    }
+
+    public ArrayList<BlueCard> getBlueCards ()
+    {
+        return blueCards;
+    }
+
+    public void addBlueCardDeckIndex ()
+    {
+        blueCardIndex ++;
+    }
+
+    public void resetBlueCardDeck ()
+    {
+        shuffleBlueCards();
+        blueCardIndex = 0;
     }
 }

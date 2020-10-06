@@ -101,8 +101,8 @@ public class GameController {
             stage.showAndWait();*/
 
             Random random = new Random();
-            int rolled = random.nextInt(10) + 1;
-            // int rolled = 40;
+            // int rolled = random.nextInt(10) + 1;
+            int rolled = 1;
             System.out.println(game.getCurrentPlayer().getPlayerID() + " has rolled " + rolled);
 
             Stage diceNotifStage = new Stage();
@@ -426,7 +426,7 @@ public class GameController {
                     }
                     break;
             }
-            if (game.getActionCardDeck().getActionCardIndex() > game.getActionCardDeck().getActionCardAmount())
+            if (game.getActionCardDeck().getActionCardIndex() >= game.getActionCardDeck().getActionCardAmount() - 1)
             {
                 game.getActionCardDeck().resetActionCardDeck();
             }
@@ -436,7 +436,66 @@ public class GameController {
             }
 
         } else if(insertSpace.equals("Blue Space")) {
-//            game.getCurrentPlayer()
+            String cardType = game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getBlueCardType();
+            int cardValue = game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getBlueCardValue();
+
+            Stage landBlueSpace1Stage = new Stage();
+            landBlueSpace1Stage.initStyle(StageStyle.UTILITY);
+            landBlueSpace1Stage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader landBlueSpace1Loader = new FXMLLoader(getClass().getResource("/view/LandBlueSpace1.fxml"));
+            LandBlueSpace1Controller landBlueSpace1Controller = new LandBlueSpace1Controller(game.getCurrentPlayer().getPlayerID(), cardType);
+            landBlueSpace1Loader.setController(landBlueSpace1Controller);
+            landBlueSpace1Stage.setScene(new Scene(landBlueSpace1Loader.load()));
+            landBlueSpace1Stage.showAndWait();
+
+            LandBlueSpace2Controller landBlueSpace2Controller = null;
+
+            Stage landBlueSpace2Stage = new Stage();
+            landBlueSpace2Stage.initStyle(StageStyle.UTILITY);
+            landBlueSpace2Stage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader landBlueSpace2Loader = new FXMLLoader(getClass().getResource("/view/LandBlueSpace2.fxml"));
+
+            if (game.getCurrentPlayer().getPlayerCareer() == game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getAssociatedCareer()) {
+                landBlueSpace2Controller = new LandBlueSpace2Controller(game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getBlueCardType(),
+                        game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getBlueCardValue(), game.getCurrentPlayer().getPlayerTaxDue(),
+                        game.getActivePlayers().size() + game.getRetiredPlayers().size(), game.getCurrentPlayer().getPlayerSalary(), true);
+            }
+            else
+            {
+                landBlueSpace2Controller = new LandBlueSpace2Controller(game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getBlueCardType(),
+                        game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getBlueCardValue(), game.getCurrentPlayer().getPlayerTaxDue(),
+                        game.getActivePlayers().size() + game.getRetiredPlayers().size(), game.getCurrentPlayer().getPlayerSalary(), false);
+            }
+
+            landBlueSpace2Loader.setController(landBlueSpace2Controller);
+            landBlueSpace2Stage.setScene(new Scene(landBlueSpace2Loader.load()));
+            landBlueSpace2Stage.showAndWait();
+
+            int changeValue = landBlueSpace2Controller.getFinalValue();
+            boolean sameCareer = landBlueSpace2Controller.getSameCareer();
+
+            if (sameCareer) {
+                game.getCurrentPlayer().addPlayerCash(changeValue);
+            } else if (!(sameCareer)) {
+                game.getCurrentPlayer().reducePlayerCash(changeValue);
+                for (int i = 0; i < game.getActivePlayers().size(); i ++)
+                {
+                    if (game.getActivePlayers().get(i).getPlayerCareer() == game.getBlueCardDeck().getBlueCards().get(game.getBlueCardDeck().getBlueCardIndex()).getAssociatedCareer())
+                    {
+                        game.getActivePlayers().get(i).addPlayerCash(changeValue);
+                    }
+                }
+            }
+
+            if (game.getBlueCardDeck().getBlueCardIndex() >= game.getBlueCardDeck().getBlueCards().size() - 1)
+            {
+                game.getBlueCardDeck().resetBlueCardDeck();
+            }
+            else
+            {
+                game.getBlueCardDeck().addBlueCardDeckIndex();
+            }
+
         } else if(insertSpace.equals("Green Space")) {
 //            game.getCurrentPlayer()
         } else if(insertSpace.equals("Pay Raise Space")) {
