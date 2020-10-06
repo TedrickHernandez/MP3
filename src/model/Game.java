@@ -81,7 +81,7 @@ public class Game {
         for (int i = 0; i < 6; i ++) {
             mixedPath.getSpaces().add(new Space("Orange Space"));
         }
-        mixedPath.getSpaces().add(new Space("Pay Raise Space"));
+        mixedPath.getSpaces().add(new Space("Green Space"));
         for (int i = 0; i < 5; i ++) {
             mixedPath.getSpaces().add(new Space("Orange Space"));
         }
@@ -97,7 +97,7 @@ public class Game {
         for (int i = 0; i < 6; i ++) {
             changeCareerPath.getSpaces().add(new Space("Orange Space"));
         }
-        changeCareerPath.getSpaces().add(new Space("Pay Raise Space"));
+        changeCareerPath.getSpaces().add(new Space("Green Space"));
         for (int i = 0; i < 7; i ++) {
             changeCareerPath.getSpaces().add(new Space("Orange Space"));
         }
@@ -106,7 +106,7 @@ public class Game {
         for (int i = 0; i < 6; i ++) {
             changeCareerPath.getSpaces().add(new Space("Orange Space"));
         }
-        changeCareerPath.getSpaces().add(new Space("Pay Raise Space"));
+        changeCareerPath.getSpaces().add(new Space("Green Space"));
 
         return changeCareerPath;
     }
@@ -128,7 +128,7 @@ public class Game {
             startFamilyPath.getSpaces().add(new Space("Orange Space"));
         }
         startFamilyPath.getSpaces().add(new Space("Blue Space"));
-        startFamilyPath.getSpaces().add(new Space("Pay Raise Space"));
+        startFamilyPath.getSpaces().add(new Space("Green Space"));
         for (int i = 0; i < 5; i ++) {
             startFamilyPath.getSpaces().add(new Space("Orange Space"));
         }
@@ -141,9 +141,9 @@ public class Game {
     {
         Path careerPath = new Path(insertName, path1, path2);
 
-        for (int i = 0; i < 13; i ++) {
-            careerPath.getSpaces().add(new Space("Blue Space"));
-        }
+        careerPath.getSpaces().add(new Space("Green Space"));
+        careerPath.getSpaces().add(new Space("Green Space"));
+
 
         /*for (int i = 0; i < 8; i ++) {
             careerPath.getSpaces().add(new Space("Orange Space"));
@@ -156,7 +156,7 @@ public class Game {
         for (int i = 0; i < 8; i ++) {
             careerPath.getSpaces().add(new Space("Orange Space"));
         }
-        careerPath.getSpaces().add(new Space("Pay Raise Space"));
+        careerPath.getSpaces().add(new Space("Green Space"));
 
         return careerPath;
     }

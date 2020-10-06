@@ -42,4 +42,9 @@ public class CareerCardDeck
         }
         return null;
     }
+
+    public ArrayList<CareerCard> getCareerCards ()
+    {
+        return careerCards;
+    }
 }

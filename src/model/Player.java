@@ -127,4 +127,19 @@ public class Player
     {
         playerCash -= insertReduceCash;
     }
+
+    public void setPlayerMarried (boolean insertMarried)
+    {
+        playerMarried = insertMarried;
+    }
+
+    public void increasePayRaise ()
+    {
+        playerPayRaises ++;
+    }
+
+    public void resetPayRaise ()
+    {
+        playerPayRaises = 0;
+    }
 }

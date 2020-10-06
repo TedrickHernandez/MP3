@@ -102,7 +102,7 @@ public class GameController {
 
             Random random = new Random();
             // int rolled = random.nextInt(10) + 1;
-            int rolled = 1;
+             int rolled = 1;
             System.out.println(game.getCurrentPlayer().getPlayerID() + " has rolled " + rolled);
 
             Stage diceNotifStage = new Stage();
@@ -496,11 +496,90 @@ public class GameController {
                 game.getBlueCardDeck().addBlueCardDeckIndex();
             }
 
-        } else if(insertSpace.equals("Green Space")) {
-//            game.getCurrentPlayer()
-        } else if(insertSpace.equals("Pay Raise Space")) {
-//            game.getCurrentPlayer()
         }
+        else if (insertSpace.equals("Get Married Space"))
+        {
+            if (game.getCurrentPlayer().getPlayerMarried() == false) {
+                int changeValue;
+
+                Stage getMarriedStage = new Stage();
+                getMarriedStage.initStyle(StageStyle.UTILITY);
+                getMarriedStage.initModality(Modality.APPLICATION_MODAL);
+                FXMLLoader getMarriedLoader = new FXMLLoader(getClass().getResource("/view/GetMarried.fxml"));
+                GetMarriedController getMarriedController = new GetMarriedController(game.getCurrentPlayer().getPlayerID());
+                getMarriedLoader.setController(getMarriedController);
+                getMarriedStage.setScene(new Scene(getMarriedLoader.load()));
+                getMarriedStage.showAndWait();
+
+                changeValue = getMarriedController.getFinalValue();
+
+            /*for (int i = 0; i < game.getActivePlayers().size(); i ++)
+            {
+                game.getCurrentPlayer().addPlayerCash(changeValue);
+            }*/
+
+                switch (game.getActivePlayers().size()) {
+                    case 2:
+                        game.getCurrentPlayer().addPlayerCash(changeValue);
+                        if (turn == 0) {
+                            game.getActivePlayers().get(turn + 1).reducePlayerCash(changeValue);
+                        } else {
+                            game.getActivePlayers().get(turn - 1).reducePlayerCash(changeValue);
+                        }
+                        break;
+                    case 3:
+                        game.getCurrentPlayer().addPlayerCash(changeValue * 2);
+                        switch (turn) {
+                            case 0:
+                                game.getActivePlayers().get(turn + 1).reducePlayerCash(changeValue);
+                                game.getActivePlayers().get(turn + 2).reducePlayerCash(changeValue);
+                                break;
+                            case 1:
+                                game.getActivePlayers().get(turn - 1).reducePlayerCash(changeValue);
+                                game.getActivePlayers().get(turn + 1).reducePlayerCash(changeValue);
+                                break;
+                            case 2:
+                                game.getActivePlayers().get(turn - 1).reducePlayerCash(changeValue);
+                                game.getActivePlayers().get(turn - 2).reducePlayerCash(changeValue);
+                                break;
+                        }
+                        break;
+                }
+                game.getCurrentPlayer().setPlayerMarried(true);
+            }
+        }
+        else if (insertSpace.equals("Green Space"))
+        {
+            Stage landGreenSpaceStage = new Stage();
+            landGreenSpaceStage.initStyle(StageStyle.UTILITY);
+            landGreenSpaceStage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader landGreenSpaceLoader = new FXMLLoader(getClass().getResource("/view/LandGreenSpace.fxml"));
+            LandGreenSpaceController landGreenSpaceController = new LandGreenSpaceController(game.getCurrentPlayer().getPlayerID(), game.getCurrentPlayer().getPlayerSalary());
+            landGreenSpaceLoader.setController(landGreenSpaceController);
+            landGreenSpaceStage.setScene(new Scene(landGreenSpaceLoader.load()));
+            landGreenSpaceStage.showAndWait();
+
+            game.getCurrentPlayer().addPlayerCash(game.getCurrentPlayer().getPlayerSalary());
+        }
+        /*else if (insertSpace.equals("Pay Raise Space"))
+        {
+            boolean payIncreased;
+            Stage landGreenSpaceStage = new Stage();
+            landGreenSpaceStage.initStyle(StageStyle.UTILITY);
+            landGreenSpaceStage.initModality(Modality.APPLICATION_MODAL);
+            FXMLLoader landGreenSpaceLoader = new FXMLLoader(getClass().getResource("/view/LandOrangeSpace.fxml"));
+            LandGreenSpaceController landGreenSpaceController = new LandGreenSpaceController(game.getCurrentPlayer().getPlayerID(), game.getCurrentPlayer().getPlayerSalary(),
+                    game.getCurrentPlayer().getPlayerPayRaises(), game.getCurrentPlayer().getPlayerCareer(), game.getCareerCardDeck().getCareerCards(), true);
+            landGreenSpaceLoader.setController(landGreenSpaceController);
+            landGreenSpaceStage.setScene(new Scene(landGreenSpaceLoader.load()));
+            landGreenSpaceStage.showAndWait();
+            payIncreased = landGreenSpaceController.getPayRaised();
+            game.getCurrentPlayer().addPlayerCash(game.getCurrentPlayer().getPlayerSalary());
+            if (payIncreased == true)
+            {
+                game.getCurrentPlayer().increasePayRaise();
+            }
+        }*/
         else if (insertSpace.equals("Retirement Space"))
         {
             Stage playerRetiresStage = new Stage();
